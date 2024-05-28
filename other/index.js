@@ -13,15 +13,14 @@ const readline = require('readline').createInterface({
 async function createPdf(input, output) {
   try {
     const pdfDoc = await PDFDocument.load(await readFile(input));
-    try {
-      const pdfDoc = await PDFDocument.load(originalPdfPath);
-      // Do something with pdfDoc
-    } catch (error) {
-      console.error("Error loading PDF:", error);
-    }
+    // try {
+    //   // const pdfDoc = await PDFDocument.load(originalPdfPath);
+    //   // Do something with pdfDoc
+    // } catch (error) {
+    //   console.error("Error loading PDF:", error);
+    // }
     // Get all text field names
-    const fieldNames = pdfDoc.getForm().getFields()
-      .map(field => field.getName());
+    const fieldNames = pdfDoc.getForm().getFields().map(field => field.getName());
 
     // Prompt user for input for each field
     const userInput = {};
