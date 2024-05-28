@@ -138,21 +138,12 @@ const PdfFormFilling = () => {
                                     value={formData[fieldName] || ''}
                                     onChange={handleInputChange}
                                     onFocus={() => handleFieldFocus(fieldName)}
+                                    style={{maxWidth:300}}
                                 />
                             </div>
                         ))}
-                        <button type="submit">Submit</button>
+                        <button type="submit" style={{maxWidth:300}}>Submit</button>
                     </form>
-                )}
-            </div>
-            <div className="pdf-viewer-container">
-                {selectedFile && (
-                    <Worker workerUrl={`https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js`}>
-                        <Viewer
-                            fileUrl={URL.createObjectURL(selectedFile)}
-                            plugins={[defaultLayoutPlugin()]}
-                        />
-                    </Worker>
                 )}
             </div>
         </div>
