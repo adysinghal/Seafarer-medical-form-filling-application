@@ -1,14 +1,13 @@
-// src/components/PdfFormFilling.js
 import React, { useState } from 'react';
 import { PDFDocument } from 'pdf-lib';
 
 const PdfFormFilling = () => {
-  const [file, setFile] = useState(null);
+  const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({});
   const [fieldNames, setFieldNames] = useState([]);
 
   const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
+    setFiles(Array.from(event.target.files));
   };
 
   const handleInputChange = (event) => {
@@ -20,23 +19,29 @@ const PdfFormFilling = () => {
     const pdfDoc = await PDFDocument.load(pdfBytes);
     const form = pdfDoc.getForm();
     const fields = form.getFields();
-    const names = fields.map((field) => field.getName());
-    setFieldNames(names);
+    return fields.map((field) => field.getName());
   };
 
   const handleFileUpload = async () => {
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = async (event) => {
-        const pdfBytes = event.target.result;
-        await loadPdfFields(pdfBytes);
-      };
-      reader.readAsArrayBuffer(file);
+    if (files.length > 0) {
+      const allFieldNames = new Set();
+      for (const file of files) {
+        const reader = new FileReader();
+        reader.onload = async (event) => {
+          const pdfBytes = event.target.result;
+          const fields = await loadPdfFields(pdfBytes);
+          fields.forEach((field) => allFieldNames.add(field));
+          setFieldNames(Array.from(allFieldNames));
+        };
+        reader.readAsArrayBuffer(file);
+      }
     }
   };
 
   const handleSubmit = async () => {
-    if (file) {
+    const downloadLinks = [];
+    let index = 0;
+    for (const file of files) {
       const reader = new FileReader();
       reader.onload = async (event) => {
         const pdfBytes = event.target.result;
@@ -59,20 +64,25 @@ const PdfFormFilling = () => {
         const modifiedPdfBytes = await pdfDoc.save();
         const blob = new Blob([modifiedPdfBytes], { type: 'application/pdf' });
         const url = URL.createObjectURL(blob);
+        downloadLinks.push(url);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'annotated-form.pdf';
+        a.download = `annotated-form-${index + 1}.pdf`;
+        index++;
         a.click();
         URL.revokeObjectURL(url);
       };
       reader.readAsArrayBuffer(file);
     }
+
+    // downloadLinks.forEach((url, index) => {
+    // });
   };
 
   return (
     <div>
       <h2>PDF Form Filling</h2>
-      <input type="file" accept="application/pdf" onChange={handleFileChange} />
+      <input type="file" accept="application/pdf" multiple onChange={handleFileChange} />
       <button onClick={handleFileUpload}>Load PDF Fields</button>
       {fieldNames.length > 0 && (
         <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
