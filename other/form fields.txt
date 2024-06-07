@@ -1,0 +1,29 @@
+first-name
+middle-name
+surname
+dob-day
+dob-month
+dob-year
+sex
+birth-city
+birth-country
+nationality
+address
+identity-doc-number
+height
+weight
+BMI
+heart-rate
+BP
+respiration
+urinalysis
+department 
+type of ship
+trading area
+Fit/unfit
+
+
+Things to be considered
+Eyesight table (?)
+Hearing table (?)
+Condition table (?)
