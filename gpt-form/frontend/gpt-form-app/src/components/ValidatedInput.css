@@ -1,0 +1,31 @@
+/* src/components/ValidatedInput.css */
+
+.validated-input-container {
+    margin-bottom: 15px;
+}
+
+.validated-input-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.validated-input-container input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.validated-input-container input:focus {
+    border-color: #66afe9;
+    outline: none;
+    box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.validated-input-container .error {
+    color: grey;
+    margin-top: 5px;
+    font-size: 0.9em;
+}

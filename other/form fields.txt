@@ -1,29 +1,55 @@
-first-name
-middle-name
-surname
-dob-day
-dob-month
-dob-year
-sex
-birth-city
-birth-country
-nationality
-address
-identity-doc-number
-height
-weight
+First name
+Middle name
+Last name
+DOB-Day
+DOB-Month
+DOB-Year
+Sex
+Birth-city
+Birth-country
+Nationality
+Mobile
+Address
+Passport-number
+Date of filling
+Time of filling
+
+///
+To-ADD
+Employee-Rank
+Vessel
+Type
+Route
+Medical Exam
+Company Name
+///
+
+
+Chest InspExp
+Height
+Weight
 BMI
-heart-rate
+Pulse
 BP
-respiration
-urinalysis
+Respiration
+Urinalysis-protein
+Urinalysis-blood
+Urinalysis-glucose
+
 department 
 type of ship
 trading area
-Fit/unfit
+
+FIT/UNFIT
+Recommendations Remarks Restrictions
 
 
 Things to be considered
 Eyesight table (?)
+UncorrectedRight eye
+UncorrectedLeft eye
+CorrectedRight eye
+CorrectedLeft eye
+
 Hearing table (?)
 Condition table (?)

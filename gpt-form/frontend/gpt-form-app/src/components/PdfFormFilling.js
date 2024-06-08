@@ -1,9 +1,12 @@
+// src/components/PdfFormFilling.js
+
 import React, { useState, useEffect, useRef } from 'react';
 import { PDFDocument } from 'pdf-lib';
 import { Viewer, Worker } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+import ValidatedInput from './ValidatedInput';
 
 const PdfFormFilling = () => {
     const [files, setFiles] = useState([]);
@@ -29,61 +32,31 @@ const PdfFormFilling = () => {
         return fields.map((field) => field.getName());
     };
 
-    // GPT FUNCTION -> WORKING
-    //   const handleFileUpload = async () => {
-    //     if (files.length > 0) {
-    //       const allFieldNames = new Set();
-    //       for (const file of files) {
-    //         const reader = new FileReader();
-    //         reader.onload = async (event) => {
-    //           const pdfBytes = event.target.result;
-    //           const fields = await loadPdfFields(pdfBytes);
-    //           fields.forEach((field) => allFieldNames.add(field));
-    //           setFieldNames(Array.from(allFieldNames));
-    //         };
-    //         reader.readAsArrayBuffer(file);
-    //       }
-    //     }
-    //   };
-
-    // GEMINI FUNCTION
     const handleFileUpload = async () => {
         if (files.length > 0) {
-            // Initialize intersection set
             let fieldNamesIntersection = new Set();
 
             for (const file of files) {
                 const reader = new FileReader();
-
-
                 reader.onload = async (event) => {
                     const pdfBytes = event.target.result;
                     const currentFileFields = new Set(await loadPdfFields(pdfBytes));
-                    
-                    // Update intersection only if fields are loaded
+
                     if (fieldNamesIntersection.size > 0) {
                         fieldNamesIntersection = new Set(
                             [...fieldNamesIntersection].filter((field) => currentFileFields.has(field))
                         );
                     } else {
-                        // Initialize intersection with first file's fields
                         fieldNamesIntersection = new Set([...currentFileFields]);
                         setFieldNames(Array.from(fieldNamesIntersection));
                     }
                 };
-                
                 reader.readAsArrayBuffer(file);
             }
-            
-            // Update state after all files are processed
-            // (outside the loop as intersection is complete)
         }
     };
 
-
-
     const handleSubmit = async () => {
-        // const downloadLinks = [];
         let index = 0;
         for (const file of files) {
             const reader = new FileReader();
@@ -114,7 +87,6 @@ const PdfFormFilling = () => {
             };
             reader.readAsArrayBuffer(file);
         }
-
     };
 
     const handleFieldFocus = (fieldName) => {
@@ -130,19 +102,14 @@ const PdfFormFilling = () => {
                 {fieldNames.length > 0 && (
                     <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
                         {fieldNames.map((fieldName) => (
-                            <div key={fieldName}>
-                                <label>{fieldName}</label>
-                                <input
-                                    type="text"
-                                    name={fieldName}
-                                    value={formData[fieldName] || ''}
-                                    onChange={handleInputChange}
-                                    onFocus={() => handleFieldFocus(fieldName)}
-                                    style={{maxWidth:300}}
-                                />
-                            </div>
+                            <ValidatedInput
+                                key={fieldName}
+                                fieldName={fieldName}
+                                value={formData[fieldName] || ''}
+                                onChange={handleInputChange}
+                            />
                         ))}
-                        <button type="submit" style={{maxWidth:300}}>Submit</button>
+                        <button type="submit" style={{ maxWidth: 300 }}>Submit</button>
                     </form>
                 )}
             </div>
