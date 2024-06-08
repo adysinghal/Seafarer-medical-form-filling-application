@@ -2,16 +2,22 @@
 
 import React, { useState } from 'react';
 import './ValidatedInput.css';
-
+    
 const ValidatedInput = ({ fieldName, value, onChange }) => {
     const [error, setError] = useState('');
 
     const validate = (name, value) => {
         let errorMessage = '';
-        if (name === 'First name' || name === 'Last name' || name === 'Middle name') {
-            const regex = /^[A-Za-z]+$/;
+        // if (name === 'First name' || name === 'Last name' || name === 'Middle name') {
+        if (['First name', 'Last name', 'Middle name'].includes(name)) {
+            const regex = /^[A-Za-z]*$/;
             if (!regex.test(value)) {
                 errorMessage = `${name} should only contain alphabets`;
+            }
+        }else if(['Mobile', 'Height', 'Weight', 'BMI', 'BP', 'Pulse', 'DOB-Day', 'DOB-Month', 'DOB-Month', 'Date of filling'].includes(name)){
+            const regex = /^[\d\W]*$/;
+            if(!regex.test(value)){
+                errorMessage = `${name} should only contain numbers and symbols`;                
             }
         }
         return errorMessage;

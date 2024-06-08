@@ -28,4 +28,5 @@
     color: grey;
     margin-top: 5px;
     font-size: 0.9em;
+    display: block; /* Ensure the error message is displayed as a block element */
 }
