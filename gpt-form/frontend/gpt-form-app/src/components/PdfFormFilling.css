@@ -1,66 +1,101 @@
 /* src/components/PdfFormFilling.css */
 .pdf-form-filling-container {
-    display: flex;
-    flex-direction: row;
-    height: 100vh;
-  }
-  
-  .form-container {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-  }
-  
-  .pdf-viewer-container {
-    flex: 2;
-    padding: 20px;
-    border-left: 1px solid #ccc;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .pdf-viewer {
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .form-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .form-container form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-container form div {
-    margin-bottom: 10px;
-  }
-  
-  .form-container form label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .form-container form input[type="text"] {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .form-container form button {
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .form-container form button:hover {
-    background-color: #0056b3;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the columns horizontally */
+  justify-content: center; /* Center the columns vertically */
+  height: 100vh;
+  background-color: #f0f0f0;
+  font-family: 'Arial', sans-serif;
+}
+
+.form-container {
+  width: 90%;
+  max-width: 600px; /* Ensure the column doesn't expand too much */
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  border-radius: 10px;
+}
+
+.pdf-viewer-container {
+  width: 90%;
+  max-width: 800px; /* Ensure the column doesn't expand too much */
+  padding: 20px;
+  border-left: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  border-radius: 10px;
+}
+
+.pdf-viewer {
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  flex-grow: 1;
+}
+
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8em;
+  color: #333;
+}
+
+.form-container form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.form-container form div {
+  margin-bottom: 15px;
+  flex: 0 48%;
+}
+
+.form-container form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-container form input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 1em;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+.form-container form button {
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1em;
+  transition: background-color 0.3s;
+}
+
+.form-container form button:hover {
+  background-color: #0056b3;
+}
+
+.validated-input-container .error {
+  color: red;
+  margin-top: 5px;
+  font-size: 0.9em;
+  display: block;
+}

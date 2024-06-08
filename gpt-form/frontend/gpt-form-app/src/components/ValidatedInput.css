@@ -8,14 +8,17 @@
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
+    color: #333;
 }
 
 .validated-input-container input {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
     box-sizing: border-box;
+    font-size: 1em;
+    transition: border-color 0.3s, background-color 0.3s;
 }
 
 .validated-input-container input:focus {
@@ -24,9 +27,14 @@
     box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
 }
 
+.validated-input-container input.error {
+    border-color: red;
+    background-color: #ffe6e6;
+}
+
 .validated-input-container .error {
-    color: grey;
+    color: red;
     margin-top: 5px;
     font-size: 0.9em;
-    display: block; /* Ensure the error message is displayed as a block element */
+    display: block;
 }
