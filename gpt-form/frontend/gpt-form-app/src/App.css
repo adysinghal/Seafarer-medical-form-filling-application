@@ -10,11 +10,16 @@ body, html {
 
 .App {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 100vh;
+  text-align: center;
+  padding: 20px;  /* Add padding to prevent touching the edges */
 }
 
 h2 {
   color: #333;
+  margin-bottom: 20px;
+  margin-top: 15; /* Ensure there is no extra margin on top */
 }
