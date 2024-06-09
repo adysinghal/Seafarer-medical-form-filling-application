@@ -6,15 +6,13 @@ function NavBar() {
     <>
       <nav class="navbar bg-body-tertiary">
         <div class="container-fluid mx-3">
-          <a class="navbar-brand" href="#">
-            <img
+        <span class="navbar-brand h1">Form Filling Application</span>
+        <img
               src={logo}
               alt="Adi"
-              width="15%"              
+              width="10%"       
               class="d-inline-block mx-3"
             />
-            Form Filling Application
-          </a>
         </div>
       </nav>
     </>
