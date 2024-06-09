@@ -1,5 +1,3 @@
-/* src/App.css */
-
 body, html {
   margin: 0;
   padding: 0;
@@ -13,13 +11,13 @@ body, html {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   text-align: center;
-  padding: 20px;  /* Add padding to prevent touching the edges */
+  padding: 20px;
 }
 
 h2 {
   color: #333;
   margin-bottom: 20px;
-  margin-top: 15; /* Ensure there is no extra margin on top */
+  margin-top: 0;
 }
