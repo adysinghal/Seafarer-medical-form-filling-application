@@ -31,7 +31,6 @@ const processPdfFiles = async (fileUrls, formData, onFieldNamesChange) => {
 };
 
 const submitPdfFiles = async (fileUrls, formData) => {
-    const currentDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
     for (const fileUrl of fileUrls) {
         const pdfBytes = await fetchPdfBytes(fileUrl);
         const pdfDoc = await PDFDocument.load(pdfBytes);
@@ -53,11 +52,24 @@ const submitPdfFiles = async (fileUrls, formData) => {
         const middleName = formData['Middle name'] || '';
         const lastName = formData['Last name'] || '';
 
+        const months = [
+            'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+        
+        const getFormattedDate = (date) => {
+            const day = date.getDate();
+            const month = months[date.getMonth()];
+            const year = date.getFullYear();
+            return `${day}-${month}-${year}`;
+        };
+        
+        const currentDate = getFormattedDate(new Date());
+
         // Extract the form name from the file URL
         const formName = fileUrl.split('/').pop().split('.').shift();
 
         // Create the new file name
-        const newFileName = `${formName}-${firstName} ${middleName} ${lastName}-${currentDate}.pdf`;
+        const newFileName = `${currentDate}-${formName}-${firstName}${middleName ? ' ' + middleName : ''} ${lastName}.pdf`;
 
         // Save the modified PDF
         const modifiedPdfBytes = await pdfDoc.save();

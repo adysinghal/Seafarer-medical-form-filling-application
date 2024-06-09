@@ -1,88 +1,96 @@
 // src/components/PdfFormFilling.js
 
-import React, { useState, useEffect } from 'react';
-import FieldForm from './FieldForm';
-import { processPdfFiles, submitPdfFiles } from './PdfProcessor';
-import './PdfFormFilling.css';
+import React, { useState, useEffect } from "react";
+import FieldForm from "./FieldForm";
+import { processPdfFiles, submitPdfFiles } from "./PdfProcessor";
+import "./PdfFormFilling.css";
 
 const PdfFormFilling = () => {
-    const [files, setFiles] = useState([]);
-    const [formData, setFormData] = useState({});
-    const [fieldNames, setFieldNames] = useState([]);
-    const [availableFiles, setAvailableFiles] = useState([]);
-    const [isProcessing, setIsProcessing] = useState(false);
+  const [files, setFiles] = useState([]);
+  const [formData, setFormData] = useState({});
+  const [fieldNames, setFieldNames] = useState([]);
+  const [availableFiles, setAvailableFiles] = useState([]);
+  const [isProcessing, setIsProcessing] = useState(false);
 
-    useEffect(() => {
-        // Fetch the available PDF files from the public folder
-        const fetchFiles = async () => {
-            const response = await fetch('/files.json'); // A JSON file listing the available PDFs
-            const fileNames = await response.json();
-            setAvailableFiles(fileNames);
-        };
-        fetchFiles();
-    }, []);
-
-    const handleFileSelection = (event) => {
-        const selectedFile = event.target.value;
-        setFiles((prevFiles) => {
-            if (prevFiles.includes(selectedFile)) {
-                return prevFiles.filter((file) => file !== selectedFile);
-            } else {
-                return [...prevFiles, selectedFile];
-            }
-        });
+  useEffect(() => {
+    // Fetch the available PDF files from the public folder
+    const fetchFiles = async () => {
+      const response = await fetch("/files.json"); // A JSON file listing the available PDFs
+      const fileNames = await response.json();
+      setAvailableFiles(fileNames);
     };
+    fetchFiles();
+  }, []);
 
-    const handleNextClick = async () => {
-        setIsProcessing(true);
-        await processPdfFiles(files, formData, setFieldNames);
-        setIsProcessing(false);
-    };
+  const handleFileSelection = (event) => {
+    const selectedFile = event.target.value;
+    setFiles((prevFiles) => {
+      if (prevFiles.includes(selectedFile)) {
+        return prevFiles.filter((file) => file !== selectedFile);
+      } else {
+        return [...prevFiles, selectedFile];
+      }
+    });
+  };
 
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setFormData((prevData) => ({ ...prevData, [name]: value }));
-    };
+  const handleNextClick = async () => {
+    setIsProcessing(true);
+    await processPdfFiles(files, formData, setFieldNames);
+    setIsProcessing(false);
+  };
 
-    const handleSubmit = () => {
-        submitPdfFiles(files, formData);
-    };
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
 
-    return (
-        <div className="pdf-form-filling-container">
-            <div className="form-container">
-                <h2>PDF Form Filling</h2>
-                {!isProcessing && fieldNames.length === 0 && (
-                    <div>
-                        <label>Select PDF Files:</label>
-                        <div className="file-list">
-                            {availableFiles.map((file, index) => (
-                                <div key={index} className="file-item">
-                                    <input
-                                        type="checkbox"
-                                        id={`file-${index}`}
-                                        value={file}
-                                        onChange={handleFileSelection}
-                                    />
-                                    <label htmlFor={`file-${index}`}>{file}</label>
-                                </div>
-                            ))}
-                        </div>
-                        <button onClick={handleNextClick}>Next</button>
-                    </div>
-                )}
-                {isProcessing && <div>Processing...</div>}
-                {!isProcessing && fieldNames.length > 0 && (
-                    <FieldForm
-                        fieldNames={fieldNames}
-                        formData={formData}
-                        onInputChange={handleInputChange}
-                        onSubmit={handleSubmit}
-                    />
-                )}
+  const handleSubmit = () => {
+    submitPdfFiles(files, formData);
+  };
+
+  return (
+    <div className="pdf-form-filling-container">
+      <div className="form-container">
+        <h2>PDF Form Filling</h2>
+        {files.length===0 && <p>&nbsp;</p>}
+
+        {files.length > 0 && (
+          <p>
+            You have selected {' '}
+            <span className="underlined">{files.join(", ")}</span>
+          </p>
+        )}
+        {!isProcessing && fieldNames.length === 0 && (
+          <div>
+            <label>Select PDF Files:</label>
+            <div className="file-list">
+              {availableFiles.map((file, index) => (
+                <div key={index} className="file-item">
+                  <input
+                    type="checkbox"
+                    id={`file-${index}`}
+                    value={file}
+                    onChange={handleFileSelection}
+                  />
+                  <label htmlFor={`file-${index}`}>{file}</label>
+                </div>
+              ))}
             </div>
-        </div>
-    );
+            <button onClick={handleNextClick}>Next</button>
+          </div>
+        )}
+        {isProcessing && <div>Processing...</div>}
+        {!isProcessing && fieldNames.length > 0 && (
+          <FieldForm
+            fieldNames={fieldNames}
+            formData={formData}
+            onInputChange={handleInputChange}
+            onSubmit={handleSubmit}
+          />
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default PdfFormFilling;
