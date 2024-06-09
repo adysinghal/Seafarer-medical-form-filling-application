@@ -1,5 +1,3 @@
-// src/components/PdfProcessor.js
-
 import { PDFDocument } from 'pdf-lib';
 
 const fetchPdfBytes = async (fileUrl) => {
@@ -33,7 +31,7 @@ const processPdfFiles = async (fileUrls, formData, onFieldNamesChange) => {
 };
 
 const submitPdfFiles = async (fileUrls, formData) => {
-    let index = 0;
+    const currentDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
     for (const fileUrl of fileUrls) {
         const pdfBytes = await fetchPdfBytes(fileUrl);
         const pdfDoc = await PDFDocument.load(pdfBytes);
@@ -50,15 +48,26 @@ const submitPdfFiles = async (fileUrls, formData) => {
             }
         }
 
+        // Extract the 'First name' from formData
+        const firstName = formData['First name'] || 'unknown';
+        const middleName = formData['Middle name'] || '';
+        const lastName = formData['Last name'] || '';
+
+        // Extract the form name from the file URL
+        const formName = fileUrl.split('/').pop().split('.').shift();
+
+        // Create the new file name
+        const newFileName = `${formName}-${firstName} ${middleName} ${lastName}-${currentDate}.pdf`;
+
+        // Save the modified PDF
         const modifiedPdfBytes = await pdfDoc.save();
         const blob = new Blob([modifiedPdfBytes], { type: 'application/pdf' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `annotated-form-${index + 1}.pdf`;
+        a.download = newFileName;
         a.click();
         URL.revokeObjectURL(url);
-        index++;
     }
 };
 

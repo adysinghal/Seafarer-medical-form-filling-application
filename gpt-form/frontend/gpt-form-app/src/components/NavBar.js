@@ -4,7 +4,7 @@ import logo from '../healthchek.png'
 function NavBar() {
   return (
     <>
-      <nav class="navbar bg-body-tertiary">
+      <nav class="navbar sticky-top bg-body-tertiary">
         <div class="container-fluid mx-3">
         <span class="navbar-brand h1">Form Filling Application</span>
         <img

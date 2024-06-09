@@ -55,9 +55,9 @@ const PdfFormFilling = () => {
                 {!isProcessing && fieldNames.length === 0 && (
                     <div>
                         <label>Select PDF Files:</label>
-                        <div>
+                        <div className="file-list">
                             {availableFiles.map((file, index) => (
-                                <div key={index}>
+                                <div key={index} className="file-item">
                                     <input
                                         type="checkbox"
                                         id={`file-${index}`}
