@@ -4,14 +4,14 @@ import logo from '../healthchek.png'
 function NavBar() {
   return (
     <>
-      <nav class="navbar sticky-top bg-body-tertiary">
-        <div class="container-fluid mx-3">
-        <span class="navbar-brand h1">Form Filling Application</span>
+      <nav className="navbar sticky-top bg-body-tertiary">
+        <div className="container-fluid mx-3">
+        <span className="navbar-brand h1">Form Filling Application</span>
         <img
               src={logo}
               alt="Adi"
               width="10%"       
-              class="d-inline-block mx-3"
+              className="d-inline-block mx-3"
             />
         </div>
       </nav>

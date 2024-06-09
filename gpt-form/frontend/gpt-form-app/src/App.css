@@ -21,3 +21,9 @@ h2 {
   margin-bottom: 20px;
   margin-top: 0;
 }
+
+@media (max-width: 600px) {
+  .App {
+    padding: 10px;
+  }
+}
