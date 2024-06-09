@@ -13,7 +13,7 @@ const FieldForm = ({ fieldNames, formData, onInputChange, onSubmit }) => (
                 onChange={onInputChange}
             />
         ))}
-        <button type="submit" style={{ maxWidth: 300 }}>Submit</button>
+        <button type="submit" style={{ maxWidth: 200 }}>Submit</button>
     </form>
 );
 

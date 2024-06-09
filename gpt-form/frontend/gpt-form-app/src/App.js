@@ -2,18 +2,20 @@ import React from 'react';
 import './App.css';
 import PdfFormFilling from './components/PdfFormFilling';
 import './components/PdfFormFilling.css';
+import NavBar from './components/NavBar.js';
 
 function App() {
   return (
+    <>
+    <NavBar/>
     <div className="App">
 
-      <h2>Medical Form Filling Application</h2> 
       {/* add a NavBar for image and heading */}
-      {/* <img src='\public\healthchek.png' alt='HealthChek logo'/> */}
       <main>
         <PdfFormFilling />
       </main>
     </div>
+    </>
   );
 }
 
