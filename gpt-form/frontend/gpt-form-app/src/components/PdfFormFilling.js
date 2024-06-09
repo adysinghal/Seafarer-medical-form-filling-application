@@ -51,7 +51,7 @@ const PdfFormFilling = () => {
   return (
     <div className="pdf-form-filling-container">
       <div className="form-container">
-        <h2>PDF Form Filling</h2>
+        <h2>Shipping Form Filling Application</h2>
         {files.length===0 && <p>&nbsp;</p>}
 
         {files.length > 0 && (
