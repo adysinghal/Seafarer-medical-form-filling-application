@@ -113,7 +113,7 @@ const PdfFormFilling = () => {
               />
               {files.map((file) => (
                 <div key={file}>
-                  <h3>&nbsp;{file}</h3>
+                  {fields.individualFields[file].length > 0 && <h3>&nbsp;{file}</h3>}
                   <FieldForm
                     fieldNames={fields.individualFields[file]}
                     formData={formData}

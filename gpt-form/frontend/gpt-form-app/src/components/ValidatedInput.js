@@ -9,7 +9,7 @@ const ValidatedInput = ({ fieldName, value, onChange }) => {
     const validate = (name, value) => {
         let errorMessage = '';
         // if (name === 'First name' || name === 'Last name' || name === 'Middle name') {
-        if (['First name', 'Last name', 'Middle name'].includes(name)) {
+        if (['First name', 'Last name', 'Middle name', 'Nationality', 'Sex', 'FIT/UNFIT', 'Birth-city', 'Birth-country'].includes(name)) {
             const regex = /^[A-Za-z]*$/;
             if (!regex.test(value)) {
                 errorMessage = `${name} should only contain alphabets`;
