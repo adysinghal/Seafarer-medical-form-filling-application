@@ -12,22 +12,34 @@ const loadPdfFields = async (pdfBytes) => {
     return fields.map((field) => field.getName());
 };
 
-const processPdfFiles = async (fileUrls, formData, onFieldNamesChange) => {
-    let fieldNamesIntersection = new Set();
+const processPdfFiles = async (fileUrls, formData, onFieldsChange) => {
+    const fieldCounts = {};
+    const fileFields = {};
 
+    // Collect fields from each PDF and count occurrences
     for (const fileUrl of fileUrls) {
         const pdfBytes = await fetchPdfBytes(fileUrl);
-        const currentFileFields = new Set(await loadPdfFields(pdfBytes));
+        const currentFileFields = await loadPdfFields(pdfBytes);
+        fileFields[fileUrl] = currentFileFields;
 
-        if (fieldNamesIntersection.size > 0) {
-            fieldNamesIntersection = new Set(
-                [...fieldNamesIntersection].filter((field) => currentFileFields.has(field))
-            );
-        } else {
-            fieldNamesIntersection = new Set([...currentFileFields]);
-            onFieldNamesChange(Array.from(fieldNamesIntersection));
-        }
+        currentFileFields.forEach((field) => {
+            if (fieldCounts[field]) {
+                fieldCounts[field]++;
+            } else {
+                fieldCounts[field] = 1;
+            }
+        });
     }
+
+    // Determine common fields and unique fields per PDF
+    const commonFields = Object.keys(fieldCounts).filter((field) => fieldCounts[field] > 1);
+    const individualFields = {};
+    for (const fileUrl of fileUrls) {
+        individualFields[fileUrl] = fileFields[fileUrl].filter((field) => !commonFields.includes(field));
+    }
+
+    // Update the state with common and individual fields
+    onFieldsChange({ commonFields, individualFields });
 };
 
 const submitPdfFiles = async (fileUrls, formData) => {

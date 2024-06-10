@@ -1,20 +1,16 @@
-import React from 'react';
-import './App.css';
-import PdfFormFilling from './components/PdfFormFilling';
-import './components/PdfFormFilling.css';
-import NavBar from './components/NavBar.js';
+import React from "react";
+import "./App.css";
+import PdfFormFilling from "./components/PdfFormFilling";
+import "./components/PdfFormFilling.css";
+import NavBar from "./components/NavBar.js";
 
 function App() {
   return (
     <>
-    <NavBar/>
-    <div className="App">
-
-      {/* add a NavBar for image and heading */}
-      <main>
+      <NavBar />
+      <div className="App">
         <PdfFormFilling />
-      </main>
-    </div>
+      </div>
     </>
   );
 }

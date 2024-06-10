@@ -1,5 +1,3 @@
-// src/components/PdfFormFilling.js
-
 import React, { useState, useEffect } from "react";
 import FieldForm from "./FieldForm";
 import { processPdfFiles, submitPdfFiles } from "./PdfProcessor";
@@ -8,7 +6,7 @@ import "./PdfFormFilling.css";
 const PdfFormFilling = () => {
   const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({});
-  const [fieldNames, setFieldNames] = useState([]);
+  const [fields, setFields] = useState({ commonFields: [], individualFields: {} });
   const [availableFiles, setAvailableFiles] = useState([]);
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -35,7 +33,7 @@ const PdfFormFilling = () => {
 
   const handleNextClick = async () => {
     setIsProcessing(true);
-    await processPdfFiles(files, formData, setFieldNames);
+    await processPdfFiles(files, formData, setFields);
     setIsProcessing(false);
   };
 
@@ -48,48 +46,89 @@ const PdfFormFilling = () => {
     submitPdfFiles(files, formData);
   };
 
-  return (
-    <div className="pdf-form-filling-container">
-      <div className="form-container">
-        <h2>Shipping Form Filling Application</h2>
-        {files.length===0 && <p>&nbsp;</p>}
+  const refreshPage = () => {
+    window.location.reload();
+  };
 
+  return (
+    <>
+      {files.length === 0 && <p>&nbsp;</p>}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+          padding: "10px",
+        }}
+      >
         {files.length > 0 && (
-          <p>
-            You have selected {' '}
-            <span className="underlined">{files.join(", ")}</span>
-          </p>
-        )}
-        {!isProcessing && fieldNames.length === 0 && (
-          <div>
-            <label>Select PDF Files:</label>
-            <div className="file-list">
-              {availableFiles.map((file, index) => (
-                <div key={index} className="file-item">
-                  <input
-                    type="checkbox"
-                    id={`file-${index}`}
-                    value={file}
-                    onChange={handleFileSelection}
-                  />
-                  <label htmlFor={`file-${index}`}>{file}</label>
-                </div>
-              ))}
-            </div>
-            <button onClick={handleNextClick}>Next</button>
-          </div>
-        )}
-        {isProcessing && <div>Processing...</div>}
-        {!isProcessing && fieldNames.length > 0 && (
-          <FieldForm
-            fieldNames={fieldNames}
-            formData={formData}
-            onInputChange={handleInputChange}
-            onSubmit={handleSubmit}
-          />
+          <button
+            type="button"
+            className="btn btn-primary"
+            style={{ position: "relative" }}
+            onClick={refreshPage}
+          >
+            {"<"} Back
+          </button>
         )}
       </div>
-    </div>
+      <div className="pdf-form-filling-container">
+        <div className="form-container">
+          <h2>Shipping Form Filling Application</h2>
+          {files.length === 0 && <p>&nbsp;</p>}
+
+          {files.length > 0 && (
+            <p>
+              You have selected{" "}
+              <span className="underlined">{files.join(", ")}</span>
+            </p>
+          )}
+          {!isProcessing && fields.commonFields.length === 0 && (
+            <div>
+              <label>Select PDF Files:</label>
+              <div className="file-list">
+                {availableFiles.map((file, index) => (
+                  <div key={index} className="file-item">
+                    <input
+                      type="checkbox"
+                      id={`file-${index}`}
+                      value={file}
+                      onChange={handleFileSelection}
+                    />
+                    <label htmlFor={`file-${index}`}>{file}</label>
+                  </div>
+                ))}
+              </div>
+              <button onClick={handleNextClick}>Next</button>
+            </div>
+          )}
+          {isProcessing && <div>Processing...</div>}
+          {!isProcessing && fields.commonFields.length > 0 && (
+            <>
+              <h3>Common Fields</h3>
+              <FieldForm
+                fieldNames={fields.commonFields}
+                formData={formData}
+                onInputChange={handleInputChange}
+              />
+              {files.map((file) => (
+                <div key={file}>
+                  <h3>&nbsp;{file}</h3>
+                  <FieldForm
+                    fieldNames={fields.individualFields[file]}
+                    formData={formData}
+                    onInputChange={handleInputChange}
+                  />
+                </div>
+              ))}
+              <button type="button" onClick={handleSubmit} className="btn btn-primary">
+                Submit
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+    </>
   );
 };
 
