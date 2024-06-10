@@ -6,7 +6,10 @@ import "./PdfFormFilling.css";
 const PdfFormFilling = () => {
   const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({});
-  const [fields, setFields] = useState({ commonFields: [], individualFields: {} });
+  const [fields, setFields] = useState({
+    commonFields: [],
+    individualFields: {},
+  });
   const [availableFiles, setAvailableFiles] = useState([]);
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -52,11 +55,10 @@ const PdfFormFilling = () => {
 
   return (
     <>
-      {files.length === 0 && <p>&nbsp;</p>}
       <div
         style={{
           display: "flex",
-          flexDirection: "column",
+          flexDirection: "row",
           alignItems: "flex-start",
           padding: "10px",
         }}
@@ -65,7 +67,6 @@ const PdfFormFilling = () => {
           <button
             type="button"
             className="btn btn-primary"
-            style={{ position: "relative" }}
             onClick={refreshPage}
           >
             {"<"} Back
@@ -78,10 +79,12 @@ const PdfFormFilling = () => {
           {files.length === 0 && <p>&nbsp;</p>}
 
           {files.length > 0 && (
+            <>
             <p>
               You have selected{" "}
               <span className="underlined">{files.join(", ")}</span>
             </p>
+            </>
           )}
           {!isProcessing && fields.commonFields.length === 0 && (
             <div>
@@ -105,6 +108,7 @@ const PdfFormFilling = () => {
           {isProcessing && <div>Processing...</div>}
           {!isProcessing && fields.commonFields.length > 0 && (
             <>
+              <hr></hr>
               <h3>Common Fields</h3>
               <FieldForm
                 fieldNames={fields.commonFields}
@@ -113,7 +117,12 @@ const PdfFormFilling = () => {
               />
               {files.map((file) => (
                 <div key={file}>
-                  {fields.individualFields[file].length > 0 && <h3>&nbsp;{file}</h3>}
+                  {fields.individualFields[file].length > 0 && (
+                    <>
+                    <hr></hr>
+                    <h3>&nbsp;{file}</h3>
+                    </>
+                  )}
                   <FieldForm
                     fieldNames={fields.individualFields[file]}
                     formData={formData}
@@ -121,7 +130,11 @@ const PdfFormFilling = () => {
                   />
                 </div>
               ))}
-              <button type="button" onClick={handleSubmit} className="btn btn-primary">
+              <button
+                type="button"
+                onClick={handleSubmit}
+                className="btn btn-primary"
+              >
                 Submit
               </button>
             </>
