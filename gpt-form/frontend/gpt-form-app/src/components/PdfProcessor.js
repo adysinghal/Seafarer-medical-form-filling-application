@@ -13,6 +13,18 @@ const loadPdfFields = async (pdfBytes) => {
 };
 
 const processPdfFiles = async (fileUrls, formData, onFieldsChange) => {
+    if (fileUrls.length === 1) {
+        const fileUrl = fileUrls[0];
+        const pdfBytes = await fetchPdfBytes(fileUrl);
+        const currentFileFields = await loadPdfFields(pdfBytes);
+
+        const commonFields = currentFileFields;
+        const individualFields = { [fileUrl]: [] };
+
+        onFieldsChange({ commonFields, individualFields });
+        return;
+    }
+
     const fieldCounts = {};
     const fileFields = {};
 
