@@ -88,7 +88,7 @@ const PdfFormFilling = () => {
           )}
           {!isProcessing && fields.commonFields.length === 0 && (
             <div>
-              <label>Select PDF Files:</label>
+              <h3>Select PDF Files:</h3>
               <div className="file-list">
                 {availableFiles.map((file, index) => (
                   <div key={index} className="file-item">
@@ -102,7 +102,8 @@ const PdfFormFilling = () => {
                   </div>
                 ))}
               </div>
-              <button onClick={handleNextClick}>Next</button>
+                
+                <button className="btn btn-primary my-3" onClick={handleNextClick}>Next</button>
             </div>
           )}
           {isProcessing && <div>Processing...</div>}
