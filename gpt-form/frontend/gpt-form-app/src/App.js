@@ -5,6 +5,7 @@ import "./components/PdfFormFilling.css";
 import NavBar from "./components/NavBar.js";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import HomePage from "./components/HomePage.js";
+import DownloadedSuccessfully from "./components/DownloadedSuccessfully.js";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               </div>
             }
           />
+          <Route path="/filled" element={<DownloadedSuccessfully/>}/>
         </Routes>
       </Router>
     </>

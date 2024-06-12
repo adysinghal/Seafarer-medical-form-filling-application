@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import FieldForm from "./FieldForm";
 import { processPdfFiles, submitPdfFiles } from "./PdfProcessor";
 import "./PdfFormFilling.css";
+import { useNavigate } from "react-router";
 
 const PdfFormFilling = () => {
+  const navigate = useNavigate();
   const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({});
   const [fields, setFields] = useState({
@@ -47,6 +49,7 @@ const PdfFormFilling = () => {
 
   const handleSubmit = () => {
     submitPdfFiles(files, formData);
+    navigate("/filled");
   };
 
   const refreshPage = () => {
@@ -63,6 +66,7 @@ const PdfFormFilling = () => {
           padding: "10px",
         }}
       >
+        {files.length === 0 && <p>&nbsp;</p>}
         {files.length > 0 && (
           <button
             type="button"
@@ -75,20 +79,20 @@ const PdfFormFilling = () => {
       </div>
       <div className="pdf-form-filling-container">
         <div className="form-container">
-          <h2>Shipping Form Filling Application</h2>
+          <h2>Shipping Medical Forms</h2>
           {files.length === 0 && <p>&nbsp;</p>}
 
           {files.length > 0 && (
             <>
-            <p>
-              You have selected{" "}
-              <span className="underlined">{files.join(", ")}</span>
-            </p>
+              <p>
+                You have selected{" "}
+                <span className="underlined">{files.join(", ")}</span>
+              </p>
             </>
           )}
           {!isProcessing && fields.commonFields.length === 0 && (
             <div>
-              <h3>Select PDF Files:</h3>
+              <h3>Select (Tick) Forms to fill:</h3>
               <div className="file-list">
                 {availableFiles.map((file, index) => (
                   <div key={index} className="file-item">
@@ -102,8 +106,13 @@ const PdfFormFilling = () => {
                   </div>
                 ))}
               </div>
-                
-                <button className="btn btn-primary my-3" onClick={handleNextClick}>Next</button>
+
+              <button
+                className="btn btn-primary my-3"
+                onClick={handleNextClick}
+              >
+                Next
+              </button>
             </div>
           )}
           {isProcessing && <div>Processing...</div>}
@@ -120,8 +129,8 @@ const PdfFormFilling = () => {
                 <div key={file}>
                   {fields.individualFields[file].length > 0 && (
                     <>
-                    <hr></hr>
-                    <h3>&nbsp;{file}</h3>
+                      <hr></hr>
+                      <h3>&nbsp;{file}</h3>
                     </>
                   )}
                   <FieldForm

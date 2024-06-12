@@ -6,9 +6,20 @@
   padding: 20px;
   width: 100%;
   max-width: 1000px;
-  /* Limit the maximum width for larger screens */
+  
   margin: auto;
-  /* Center the container */
+}
+
+input[type="checkbox"] {
+  transform: scale(1.5);
+  margin-right: 10px; 
+}
+
+h3{
+  color:  #0d6efd;
+  font-weight: bold;
+  font-style: oblique;
+  /* text-decoration: underline; */
 }
 
 .form-container {
@@ -21,13 +32,13 @@
   min-height: 400px;
 }
 
-p {
+p{
   color: rgb(84, 84, 84);
   font-style: oblique;
 }
 
 .underlined {
-  color: rgb(255, 0, 0);
+  color: #0d6efd;
   text-decoration: underline;
 }
 
@@ -40,7 +51,7 @@ p {
 
 .file-item {
   text-align: left;
-  transform: translateX(-10%);
+  transform: translateX(-14%);
   left: 50%;
   position: relative;
   max-width: 600px; /* Adjust this to control the width of the text block */
