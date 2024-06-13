@@ -26,7 +26,7 @@ const PdfFormFilling = (props) => {
       setAvailableFiles(fileNames);
     };
     fetchFiles();
-  }, []);
+  });
 
   const handleFileSelection = (event) => {
     const selectedFile = event.target.value;
