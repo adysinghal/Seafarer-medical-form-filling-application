@@ -32,6 +32,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<Login showAlert={showAlert} />} />
+            <Route path="signup" element={<Signup showAlert={showAlert} />}/>
             <Route
               path="/home"
               element={
@@ -40,7 +41,6 @@ function App() {
                 </div>
               }
             />
-            <Route path="signup" element={<Signup showAlert={showAlert} />}/>
             <Route path="/filled" element={<DownloadedSuccessfully />} />
           </Routes>
       </Router>

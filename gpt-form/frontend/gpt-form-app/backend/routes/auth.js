@@ -23,8 +23,6 @@ router.post('/createuser', [
     }
 
     try{
-        console.log("hello");
-        console.log(JWT_SECRET);
         // check if email already exists
         let user = await User.findOne({ email: req.body.email });
 

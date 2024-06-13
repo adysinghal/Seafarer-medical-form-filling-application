@@ -1,9 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router';
 import './DownloadedSuccessfully.css'
 
 function DownloadedSuccessfully() {
 const navigate = useNavigate();
+
+  useEffect(() => {
+    if(!localStorage.getItem('token')){
+      navigate("/");
+    }
+  })
+  
 
   const navigateFunction = () => {
     navigate('/home');

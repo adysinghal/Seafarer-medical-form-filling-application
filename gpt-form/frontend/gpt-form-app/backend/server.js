@@ -11,7 +11,7 @@ app.use(express.json());
 app.use('/api/auth', require('./routes/auth.js'));
 const PORT = process.env.PORT || 5000
 
-mongoose.connect('mongodb://0.0.0.0:27017').then(() => {
+mongoose.connect("mongodb+srv://test:aditya@shipping-form.mfzagmp.mongodb.net/?retryWrites=true&w=majority&appName=Shipping-Form").then(() => {
     console.log('Connected to MongoDB');
 }).catch(err => {
     console.error('Failed to connect to Mongo', err);
