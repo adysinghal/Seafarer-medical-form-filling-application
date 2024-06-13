@@ -4,7 +4,7 @@ import { processPdfFiles, submitPdfFiles } from "./PdfProcessor";
 import "./PdfFormFilling.css";
 import { useNavigate } from "react-router";
 
-const PdfFormFilling = () => {
+const PdfFormFilling = (props) => {
   const navigate = useNavigate();
   const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({});
@@ -40,6 +40,9 @@ const PdfFormFilling = () => {
     setIsProcessing(true);
     await processPdfFiles(files, formData, setFields);
     setIsProcessing(false);
+    if(files.length === 0){
+      props.showAlert("Please select at least one form", "danger");
+    }
   };
 
   const handleInputChange = (event) => {
@@ -50,10 +53,11 @@ const PdfFormFilling = () => {
   const handleSubmit = () => {
     submitPdfFiles(files, formData);
     navigate("/filled");
+    props.showAlert("Downloading", "success")
   };
 
   const refreshPage = () => {
-    window.location.reload();
+    navigate("/");
   };
 
   return (

@@ -1,19 +1,33 @@
 import React from "react";
-import logo from '../healthchek.png';
+import logo from "../healthchek.png";
+import { useNavigate } from "react-router";
 
-function NavBar() {
+function NavBar(props) {
+  let navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+    props.showAlert("Logged out successfully", "success");
+  };
+
   return (
     <>
-      <nav className="navbar sticky-top bg-body-tertiary" style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-        <div className="container-fluid mx-3">
-          <span className="navbar-brand h1">Shipping Medical Forms</span>
+      <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="/">
           <img
             src={logo}
             alt="Logo"
-            width= "150vw"       
+            width="100vw"
             className="d-inline-block mx-3"
           />
-        </div>
+          Shipping Medical Forms
+        </a>
+        {localStorage.getItem("token") ? (
+          <button onClick={handleLogout} className="btn btn-primary mx-4">
+            Logout
+          </button>
+        ) : (<p></p>)}
       </nav>
     </>
   );
