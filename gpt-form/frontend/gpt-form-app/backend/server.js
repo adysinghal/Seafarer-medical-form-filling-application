@@ -17,6 +17,8 @@ mongoose.connect("mongodb+srv://test:aditya@shipping-form.mfzagmp.mongodb.net/?r
     console.error('Failed to connect to Mongo', err);
 });
 
+// connect to app
+
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
 });
