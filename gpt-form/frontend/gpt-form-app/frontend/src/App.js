@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import "./App.css";
-import PdfFormFilling from "./components/PdfFormFilling";
+import PdfFormFilling from "./components/PdfFormFilling.js";
 import "./components/PdfFormFilling.css";
 import NavBar from "./components/NavBar.js";
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import HomePage from "./components/HomePage.js";
 import DownloadedSuccessfully from "./components/DownloadedSuccessfully.js";
 import Login from "./components/Login.js";
-import Alert from "./components/Alert";
+import Alert from "./components/Alert.js";
 import Signup from "./components/Signup.js";
 
 function App() {
