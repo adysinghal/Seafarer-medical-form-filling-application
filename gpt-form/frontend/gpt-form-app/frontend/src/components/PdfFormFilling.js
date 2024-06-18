@@ -65,7 +65,7 @@ const PdfFormFilling = (props) => {
   const handleShow = () => setShow(true);
 
   const handleConfirmBack = () => {
-    if (window.confirm('If you go back, you might lose the entered information. Do you want to proceed?')) {
+    if (window.confirm('If you go back, you might lose the entered information. Do you still want to go back?')) {
       refreshPage();
     }
   };
@@ -142,20 +142,20 @@ const PdfFormFilling = (props) => {
                 </div>
               ))}
               <button type="button" onClick={handleShow} className="btn btn-primary">
-                Submit
+                Download
               </button>
 
               <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                  <Modal.Title>Confirm Submit</Modal.Title>
+                  <Modal.Title>Confirm Download</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Are you sure you want to submit?</Modal.Body>
+                <Modal.Body>Are you sure you want to download all the forms?</Modal.Body>
                 <Modal.Footer>
                   <Button variant="secondary" onClick={handleClose}>
                     Cancel
                   </Button>
                   <Button variant="primary" onClick={handleSubmit}>
-                    Confirm
+                    Download
                   </Button>
                 </Modal.Footer>
               </Modal>
