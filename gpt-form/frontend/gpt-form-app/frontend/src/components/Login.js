@@ -52,7 +52,7 @@ export default function Login(props) {
               </div>
             </Card.Body>
           </Card>
-          <div className="w-100 text-center mt-2">
+          <div className="w-100 text-center mt-2" style={{color:'black'}}>
             Create a new account? <Link to="/signup">Sign Up</Link>
           </div>
         </div>
