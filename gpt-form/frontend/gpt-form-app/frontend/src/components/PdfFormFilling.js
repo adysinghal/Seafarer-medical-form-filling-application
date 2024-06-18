@@ -16,9 +16,9 @@ const PdfFormFilling = (props) => {
   const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
-    if(!localStorage.getItem('token')){
-      navigate("/");
-    }
+    // if(!localStorage.getItem('token')){
+    //   navigate("/");
+    // }
     // Fetch the available PDF files from the public folder
     const fetchFiles = async () => {
       const response = await fetch("/files.json"); // A JSON file listing the available PDFs
