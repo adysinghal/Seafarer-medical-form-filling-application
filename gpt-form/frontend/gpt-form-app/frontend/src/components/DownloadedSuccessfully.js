@@ -5,12 +5,6 @@ import './DownloadedSuccessfully.css'
 function DownloadedSuccessfully() {
 const navigate = useNavigate();
 
-  useEffect(() => {
-    if(!localStorage.getItem('token')){
-      navigate("/");
-    }
-  })
-  
 
   const navigateFunction = () => {
     navigate('/home');

@@ -18,13 +18,12 @@ export default function Login(props) {
       setError('');
       setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
-      props.showAlert('Logged in successfully', 'success')
-    } catch (error) {
-      console.log(error);
-      setError('Failed to log in');
+      props.showAlert('Logged in successfully', 'success');
+      navigate('/home');
+    } catch (e){
+      setError(`Failed with error code: ${e.code}`);
     }
     setLoading(false);
-    navigate("/home");
   }
 
   return (
@@ -48,9 +47,8 @@ export default function Login(props) {
                   Log In
                 </Button>
               </Form>
-              <div className='w-100 text-center mt-3'>
+              <div className="w-100 text-center mt-3">
                 <Link to="/forgot-password">Forgot Password?</Link>
-
               </div>
             </Card.Body>
           </Card>

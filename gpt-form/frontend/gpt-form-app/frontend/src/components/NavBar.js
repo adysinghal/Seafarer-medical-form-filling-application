@@ -19,7 +19,7 @@ function NavBar(props) {
 
   return (
     <>
-      <nav className="navbar navbar-light bg-light">
+      <nav className="navbar sticky-top navbar-light bg-light">
         <a className="navbar-brand" href="/">
           <img src={logo} alt="Logo" width="100vw" className="d-inline-block mx-3" />
           Shipping Medical Forms

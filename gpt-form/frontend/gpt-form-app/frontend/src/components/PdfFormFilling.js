@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import FieldForm from "./FieldForm";
-import { processPdfFiles, submitPdfFiles } from "./PdfProcessor";
-import "./PdfFormFilling.css";
-import { useNavigate } from "react-router";
+import React, { useState, useEffect } from 'react';
+import FieldForm from './FieldForm';
+import { processPdfFiles, submitPdfFiles } from './PdfProcessor';
+import './PdfFormFilling.css';
+import { useNavigate } from 'react-router';
+import { Modal, Button } from 'react-bootstrap';
 
 const PdfFormFilling = (props) => {
   const navigate = useNavigate();
@@ -14,14 +15,14 @@ const PdfFormFilling = (props) => {
   });
   const [availableFiles, setAvailableFiles] = useState([]);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [show, setShow] = useState(false);
+
+
 
   useEffect(() => {
-    // if(!localStorage.getItem('token')){
-    //   navigate("/");
-    // }
     // Fetch the available PDF files from the public folder
     const fetchFiles = async () => {
-      const response = await fetch("/files.json"); // A JSON file listing the available PDFs
+      const response = await fetch('/files.json'); // A JSON file listing the available PDFs
       const fileNames = await response.json();
       setAvailableFiles(fileNames);
     };
@@ -43,8 +44,8 @@ const PdfFormFilling = (props) => {
     setIsProcessing(true);
     await processPdfFiles(files, formData, setFields);
     setIsProcessing(false);
-    if(files.length === 0){
-      props.showAlert("Please select at least one form", "danger");
+    if (files.length === 0) {
+      props.showAlert('Please select at least one form', 'danger');
     }
   };
 
@@ -55,32 +56,33 @@ const PdfFormFilling = (props) => {
 
   const handleSubmit = () => {
     submitPdfFiles(files, formData);
-    navigate("/filled");
-    props.showAlert("Downloading", "success")
+    navigate('/filled');
+    props.showAlert('Downloading', 'success');
+    handleClose();
   };
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+
   const refreshPage = () => {
-    navigate("/");
+    navigate('/');
   };
 
   return (
     <>
       <div
         style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "flex-start",
-          padding: "10px",
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'flex-start',
+          padding: '10px',
         }}
       >
         {files.length === 0 && <p>&nbsp;</p>}
         {files.length > 0 && (
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={refreshPage}
-          >
-            {"<"} Back
+          <button type="button" className="btn btn-primary" onClick={refreshPage}>
+            {'<'} Back
           </button>
         )}
       </div>
@@ -92,8 +94,7 @@ const PdfFormFilling = (props) => {
           {files.length > 0 && (
             <>
               <p>
-                You have selected{" "}
-                <span className="underlined">{files.join(", ")}</span>
+                You have selected <span className="underlined">{files.join(', ')}</span>
               </p>
             </>
           )}
@@ -103,21 +104,13 @@ const PdfFormFilling = (props) => {
               <div className="file-list">
                 {availableFiles.map((file, index) => (
                   <div key={index} className="file-item">
-                    <input
-                      type="checkbox"
-                      id={`file-${index}`}
-                      value={file}
-                      onChange={handleFileSelection}
-                    />
+                    <input type="checkbox" id={`file-${index}`} value={file} onChange={handleFileSelection} />
                     <label htmlFor={`file-${index}`}>{file}</label>
                   </div>
                 ))}
               </div>
 
-              <button
-                className="btn btn-primary my-3"
-                onClick={handleNextClick}
-              >
+              <button className="btn btn-primary my-3" onClick={handleNextClick}>
                 Next
               </button>
             </div>
@@ -127,11 +120,7 @@ const PdfFormFilling = (props) => {
             <>
               <hr></hr>
               <h3>Common Fields</h3>
-              <FieldForm
-                fieldNames={fields.commonFields}
-                formData={formData}
-                onInputChange={handleInputChange}
-              />
+              <FieldForm fieldNames={fields.commonFields} formData={formData} onInputChange={handleInputChange} />
               {files.map((file) => (
                 <div key={file}>
                   {fields.individualFields[file].length > 0 && (
@@ -147,13 +136,24 @@ const PdfFormFilling = (props) => {
                   />
                 </div>
               ))}
-              <button
-                type="button"
-                onClick={handleSubmit}
-                className="btn btn-primary"
-              >
+              <button type="button" onClick={handleShow} className="btn btn-primary">
                 Submit
               </button>
+
+              <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Confirm Submit</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Are you sure you want to submit?</Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                    Cancel
+                  </Button>
+                  <Button variant="primary" onClick={handleSubmit}>
+                    Confirm
+                  </Button>
+                </Modal.Footer>
+              </Modal>
             </>
           )}
         </div>

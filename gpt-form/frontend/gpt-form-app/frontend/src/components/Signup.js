@@ -24,12 +24,11 @@ export default function Signup(props) {
       setLoading(true);
       await signup(emailRef.current.value, passwordRef.current.value);
       props.showAlert('Signed up successfully', 'success')
-    } catch (error) {
-      console.log(error);
-      setError("Could not create an account");
+      navigate("/home");
+    } catch (e) {
+      setError(`Failed with error code: ${e.code}`);
     }
     setLoading(false);
-    navigate("/home");
   }
 
   return (

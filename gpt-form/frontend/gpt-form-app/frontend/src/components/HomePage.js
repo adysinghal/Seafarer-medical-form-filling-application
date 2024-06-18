@@ -25,15 +25,21 @@ function HomePage() {
           <form className="d-flex" role="search">
             {!currentUser ? (
               <>
-                <Link className="btn btn-primary mx-2" to="/login" role="button">
-                  Login
-                </Link>
-                <Link className="btn btn-primary mx-2" to="/signup" role="button">
-                  Sign-up
-                </Link>
+                <div className="button-container mt-3">
+                  <Link className="fill-forms-button mx-3" to="/login" role="button">
+                    Log In
+                  </Link>
+                  <p className="mt-2">Existing user</p>
+                </div>
+                <div className="button-container mt-3">
+                  <Link className="fill-forms-button mx-3" to="/signup" role="button">
+                    Sign Up
+                  </Link>
+                  <p className="mt-2">New user</p>
+                </div>
               </>
             ) : (
-              <Link className="btn btn-primary mx-2" to="/home" role="button">
+              <Link className="fill-forms-button mx-3" to="/home" role="button">
                 Fill forms
               </Link>
             )}
