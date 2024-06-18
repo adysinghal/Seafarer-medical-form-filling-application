@@ -64,6 +64,11 @@ const PdfFormFilling = (props) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const handleConfirmBack = () => {
+    if (window.confirm('If you go back, you might lose the entered information. Do you want to proceed?')) {
+      refreshPage();
+    }
+  };
 
   const refreshPage = () => {
     navigate('/');
@@ -81,7 +86,7 @@ const PdfFormFilling = (props) => {
       >
         {files.length === 0 && <p>&nbsp;</p>}
         {files.length > 0 && (
-          <button type="button" className="btn btn-primary" onClick={refreshPage}>
+          <button type="button" className="btn btn-primary" onClick={handleConfirmBack}>
             {'<'} Back
           </button>
         )}
