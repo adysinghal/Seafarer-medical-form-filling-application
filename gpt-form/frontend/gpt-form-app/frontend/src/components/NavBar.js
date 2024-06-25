@@ -3,18 +3,20 @@ import logo from '../healthchek.png';
 import { useNavigate } from 'react-router';
 import { useAuth } from '../contexts/AuthContext.js';
 import './NavBar.css';
+import { useAlert } from '../contexts/AlertContext.js';
 
 function NavBar(props) {
   let navigate = useNavigate();
   const { currentUser, logout } = useAuth();
+  const {alert, showAlert} = useAlert();
 
   const handleLogout = async () => {
     try {
       await logout();
       navigate('/');
-      props.showAlert('Logged out successfully', 'success');
+      showAlert('Logged out successfully', 'success');
     } catch (error) {
-      props.showAlert('Failed to log out', 'danger');
+      showAlert('Failed to log out', 'danger');
     }
   };
 

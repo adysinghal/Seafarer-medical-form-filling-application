@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Form, Button, Card, Alert, Container } from 'react-bootstrap';
 import { useAuth } from '../contexts/AuthContext.js';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAlert } from '../contexts/AlertContext.js';
 
 export default function Login(props) {
   const emailRef = useRef();
@@ -10,6 +11,7 @@ export default function Login(props) {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const {alert, showAlert} = useAlert();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -18,7 +20,7 @@ export default function Login(props) {
       setError('');
       setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
-      props.showAlert('Logged in successfully', 'success');
+      showAlert('Logged in successfully', 'success');
       navigate('/home');
     } catch (e){
       setError(`Failed with error code: ${e.code}`);

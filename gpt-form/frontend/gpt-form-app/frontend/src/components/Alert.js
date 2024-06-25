@@ -1,12 +1,12 @@
 import React from 'react'
+import { useAlert } from '../contexts/AlertContext'
 
 function Alert(props) {
-
-
+    const {alert} = useAlert();
     return (
-        props.alert &&
-        <div className={`alert alert-${props.alert.type} alert-dismissible fade show`} role="alert">
-            {props.alert.msg}
+        alert &&
+        <div className={`alert alert-${alert.type} alert-dismissible fade show`} role="alert">
+            {alert.msg}
         </div>
     )
 }

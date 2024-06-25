@@ -4,6 +4,7 @@ import { processPdfFiles, submitPdfFiles } from './PdfProcessor';
 import './PdfFormFilling.css';
 import { useNavigate } from 'react-router';
 import { Modal, Button } from 'react-bootstrap';
+import { useAlert } from '../contexts/AlertContext';
 
 const PdfFormFilling = (props) => {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ const PdfFormFilling = (props) => {
   const [availableFiles, setAvailableFiles] = useState([]);
   const [isProcessing, setIsProcessing] = useState(false);
   const [show, setShow] = useState(false);
+  const {alert, showAlert} = useAlert();
 
 
 
@@ -45,7 +47,7 @@ const PdfFormFilling = (props) => {
     await processPdfFiles(files, formData, setFields);
     setIsProcessing(false);
     if (files.length === 0) {
-      props.showAlert('Please select at least one form', 'danger');
+      showAlert('Please select at least one form', 'danger');
     }
   };
 
@@ -57,7 +59,7 @@ const PdfFormFilling = (props) => {
   const handleSubmit = () => {
     submitPdfFiles(files, formData);
     navigate('/filled');
-    props.showAlert('Downloading', 'success');
+    showAlert('Downloading', 'success');
     handleClose();
   };
 
