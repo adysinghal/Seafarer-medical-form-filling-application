@@ -1,0 +1,4 @@
+To run the project locally, navigate to
+C:\Users\singh\Documents\GitHub\shipping-form\PDF-form\gpt-form\frontend\gpt-form-app\frontend>
+and run 
+npm run start in the integrated terminal

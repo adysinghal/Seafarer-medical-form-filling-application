@@ -17,9 +17,23 @@ const PdfFormFilling = (props) => {
   const [availableFiles, setAvailableFiles] = useState([]);
   const [isProcessing, setIsProcessing] = useState(false);
   const [show, setShow] = useState(false);
-  const {alert, showAlert} = useAlert();
+  const { alert, showAlert } = useAlert();
 
+  // Define the desired order of fields
+  const desiredOrder = [
+    'First name', 'Last name', 'Middle name', 'Address', 'Mobile',
+    'DOB-Day', 'DOB-Month', 'DOB-Year', 'Sex', 'Date of filling',
+    'Time of filling', 'Passport-number', 'Birth-city', 'Birth-country',
+    'Weight', 'Height', 'BMI', 'BP', 'Pulse'
+  ];
 
+  // Helper function to reorder fields
+  const reorderFields = (fieldsArray) => {
+    const knownFieldsInForm = desiredOrder.filter((field) => fieldsArray.includes(field));
+    const unknownFields = fieldsArray.filter((field) => !desiredOrder.includes(field));
+    // If you only want the known fields, omit the unknownFields:
+    return [...knownFieldsInForm, ...unknownFields];
+  };
 
   useEffect(() => {
     // Fetch the available PDF files from the public folder
@@ -76,6 +90,8 @@ const PdfFormFilling = (props) => {
     navigate('/');
   };
 
+  const reorderedCommonFields = reorderFields(fields.commonFields);
+
   return (
     <>
       <div
@@ -127,22 +143,25 @@ const PdfFormFilling = (props) => {
             <>
               <hr></hr>
               <h3>Common Fields</h3>
-              <FieldForm fieldNames={fields.commonFields} formData={formData} onInputChange={handleInputChange} />
-              {files.map((file) => (
-                <div key={file}>
-                  {fields.individualFields[file].length > 0 && (
-                    <>
-                      <hr></hr>
-                      <h3>&nbsp;{file}</h3>
-                    </>
-                  )}
-                  <FieldForm
-                    fieldNames={fields.individualFields[file]}
-                    formData={formData}
-                    onInputChange={handleInputChange}
-                  />
-                </div>
-              ))}
+              <FieldForm fieldNames={reorderedCommonFields} formData={formData} onInputChange={handleInputChange} />
+              {files.map((file) => {
+                const reorderedIndividualFields = reorderFields(fields.individualFields[file] || []);
+                return (
+                  <div key={file}>
+                    {reorderedIndividualFields.length > 0 && (
+                      <>
+                        <hr></hr>
+                        <h3>&nbsp;{file}</h3>
+                      </>
+                    )}
+                    <FieldForm
+                      fieldNames={reorderedIndividualFields}
+                      formData={formData}
+                      onInputChange={handleInputChange}
+                    />
+                  </div>
+                );
+              })}
               <button type="button" onClick={handleShow} className="btn btn-primary">
                 Download
               </button>
